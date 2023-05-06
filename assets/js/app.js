@@ -148,25 +148,15 @@ function carregaListaDespesas(despesasFiltradas) {
 
     despesas = despesasFiltradas === undefined ? bd.recuperarTodosRegistros() : despesasFiltradas;
     
-    var listaDespesas = document.getElementById('listaDespesas')
+    var listaDespesas = document.getElementById('listaDespesas');
     listaDespesas.innerHTML = '';
-
-    let tipo = document.getElementById('tipo');
-    let qtdTipos = tipo.childElementCount;
-    let descTipos = '';
 
     despesas.forEach((d) => {
 
         let linha = listaDespesas.insertRow();
 
-        for (let i = 0; i < qtdTipos; i++) {
-            if (d.tipo == tipo.options[i].value) {
-                descTipos = tipo.options[i].text;
-            }
-        }
-
         linha.insertCell(0).innerHTML = `${d.dia}/${d.mes}/${d.ano}`;
-        linha.insertCell(1).innerHTML = descTipos;
+        linha.insertCell(1).innerHTML = descricaoTipo(d.tipo);
         linha.insertCell(2).innerHTML = d.descricao;
         linha.insertCell(3).innerHTML = d.valor;
 
@@ -176,22 +166,31 @@ function carregaListaDespesas(despesasFiltradas) {
         btnExclusao.id = `id_dispesa_${d.id}`;
         btnExclusao.onclick = function() {
 
+            let id_despesa = this.id.replace('id_dispesa_', '');
+
+            let tipo = '';
+
+            despesas.forEach((d) => {
+                if (d.id == id_despesa) {
+                    tipo = d.tipo;
+                }
+            });
+
             let modal = {
                 titulo : 'Tem certeza?',
                 customTitulo : 'modal-header text-danger',
-                descricao : `Deseja excluir a despesa selecionada ?`,
+                descricao : `Deseja excluir a despesa do tipo ${descricaoTipo(tipo)} ?`,
                 confirma : true,
                 descBotao : 'Voltar',
                 customBotao : 'btn btn-danger',
             };
 
             customizarModal(modal);
-
-            //dialog de erro
+            
             $('#modalRegistraDespesa').modal('show');
 
             document.querySelector('#btnConfirma').addEventListener('click', () => {
-                excluirDespesa(this.id.replace('id_dispesa_', ''));
+                excluirDespesa(id_despesa);
             });
             
         };
@@ -237,4 +236,19 @@ function customizarModal(customModal) {
 function excluirDespesa(id_dispesa) {
     bd.removerDespesa(id_dispesa);
     window.location.reload();
+}
+
+function descricaoTipo(id_tipo) {
+    let tipo = document.getElementById('tipo');
+    let qtdTipos = tipo.childElementCount;
+    let descTipos = '';
+
+    for (let i = 0; i < qtdTipos; i++) {
+        if (id_tipo == tipo.options[i].value) {
+            descTipos = tipo.options[i].text;
+            break;
+        }
+    }
+
+    return descTipos;
 }
