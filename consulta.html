@@ -82,7 +82,7 @@
 
         <div class="col-md-6">
           <select class="form-control" id="tipo">
-            <option>Tipo</option>
+            <option value="">Tipo</option>
             <option value="1">Alimentação</option>
             <option value="2">Educação</option>
             <option value="3">Lazer</option>
@@ -102,7 +102,7 @@
         </div>
 
         <div class="col-md-2 d-flex justify-content-end">
-          <button type="button" class="btn btn-primary">
+          <button type="button" class="btn btn-primary" onclick="pesquisarDespesa()">
             <i class="fas fa-search"></i>
           </button>
         </div>
@@ -121,11 +121,34 @@
               </tr>
             </thead>
 
-            <tbody>
+            <tbody id="listaDespesas">
+
             </tbody>
           </table>
         </div>
       </div>
+
+          <!-- Modal Success -->
+      <div class="modal fade" id="modalRegistraDespesa" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div id="modal_titulo_div">
+            <h5 class="modal-title" id="modal_titulo"></h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body" id="modal_conteudo">
+            
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-success" id="btnConfirma" data-dismiss="modal" onclick="excluirDespesa()">Confirmar</button>
+            <button type="button" id="modal_btn" data-dismiss="modal">Voltar</button>
+          </div>
+        </div>
+      </div>
+    </div>
     </div>
   </body>	
 
