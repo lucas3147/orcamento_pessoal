@@ -38,6 +38,19 @@ class Despesa {
         localStorage.setItem(id, JSON.stringify(d))
         localStorage.setItem('id', id)
     }
+
+    recuperarTodosRegistros() {
+        let id = localStorage.getItem('id');
+        let despesas = [];
+        
+        for (let i = 1; i <= id; i++) {
+            if (localStorage.getItem(i) !== null) {
+                despesas.push(JSON.parse(localStorage.getItem(i)));
+            }
+        }
+
+        return despesas;
+    }
  }
 
 let bd = new Bd()
@@ -61,10 +74,32 @@ function cadastrarDespesa() {
     
     if (despesa.validarDados()) {
         bd.gravar(despesa)
-        $('#gravacaoRealizada').modal('show')
+
+        document.getElementById('modal_titulo').innerHTML = 'Registro inserido';
+        document.getElementById('modal_titulo_div').className = 'modal-header text-success';
+        document.getElementById('modal_conteudo').innerHTML = 'Despesa foi cadastrada com sucesso';
+        document.getElementById('modal_btn').innerHTML = 'Voltar';
+        document.getElementById('modal_btn').className = 'btn btn-success';
+
+        //dialog de sucesso
+        $('#modalRegistraDespesa').modal('show')
     } else {
-        $('#erroGravacao').modal('show')
+
+        document.getElementById('modal_titulo').innerHTML = 'Erro na inclusão do registro';
+        document.getElementById('modal_titulo_div').className = 'modal-header text-danger';
+        document.getElementById('modal_conteudo').innerHTML = 'Erro na gravação, verifique se todos os campos foram preenchidos corretamente';
+        document.getElementById('modal_btn').innerHTML = 'Voltar';
+        document.getElementById('modal_btn').className = 'btn btn-danger';
+
+        //dialog de erro
+        $('#modalRegistraDespesa').modal('show')
     }
-    bd.gravar(despesa)
 }
 
+function carregaListaDespesas() {
+    let despesas = [];
+
+    despesas = bd.recuperarTodosRegistros();
+    
+    console.log(despesas);
+}
