@@ -108,13 +108,14 @@ function cadastrarDespesa() {
     if (despesa.validarDados()) {
         bd.gravar(despesa)
 
-        let modal = {};
-        modal.titulo = 'Registro inserido';
-        modal.customTitulo = 'modal-header text-success';
-        modal.descricao = 'Despesa foi cadastrada com sucesso';
-        modal.confirma = false;
-        modal.descBotao = 'Voltar';
-        modal.customBotao = 'btn btn-success';
+        let modal = {
+            titulo : 'Registro inserido',
+            customTitulo : 'modal-header text-success',
+            descricao : 'Despesa foi cadastrada com sucesso',
+            confirma : false,
+            descBotao : 'Voltar',
+            customBotao : 'btn btn-success',
+        };
 
         customizarModal(modal);
 
@@ -124,13 +125,14 @@ function cadastrarDespesa() {
         limparCampos();
     } else {
 
-        let modal = {};
-        modal.titulo = 'Erro na inclusão do registro';
-        modal.customTitulo = 'modal-header text-danger';
-        modal.descricao = 'Erro na gravação, verifique se todos os campos foram preenchidos corretamente';
-        modal.confirma = false;
-        modal.descBotao = 'Voltar';
-        modal.customBotao = 'btn btn-danger';
+        let modal = {
+            titulo : 'Erro na inclusão do registro',
+            customTitulo : 'modal-header text-danger',
+            descricao : 'Erro na gravação, verifique se todos os campos foram preenchidos corretamente',
+            confirma : false,
+            descBotao : 'Voltar',
+            customBotao : 'btn btn-danger',
+        };
 
         customizarModal(modal);
 
@@ -174,13 +176,14 @@ function carregaListaDespesas(despesasFiltradas) {
         btnExclusao.id = `id_dispesa_${d.id}`;
         btnExclusao.onclick = function() {
 
-            let modal = {};
-            modal.titulo = 'Tem certeza?';
-            modal.customTitulo = 'modal-header text-danger';
-            modal.descricao = `Deseja excluir a despesa selecionada ?`;
-            modal.confirma = true;
-            modal.descBotao = 'Voltar';
-            modal.customBotao = 'btn btn-danger';
+            let modal = {
+                titulo : 'Tem certeza?',
+                customTitulo : 'modal-header text-danger',
+                descricao : `Deseja excluir a despesa selecionada ?`,
+                confirma : true,
+                descBotao : 'Voltar',
+                customBotao : 'btn btn-danger',
+            };
 
             customizarModal(modal);
 
