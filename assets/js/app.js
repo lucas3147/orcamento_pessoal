@@ -172,7 +172,7 @@ function carregaListaDespesas(despesasFiltradas) {
         btnExclusao.className = 'btn btn-danger';
         btnExclusao.innerHTML = '<i class="fas fa-times"></i>';
         btnExclusao.id = `id_dispesa_${d.id}`;
-        btnExclusao.onclick = () => {
+        btnExclusao.onclick = function() {
 
             let modal = {};
             modal.titulo = 'Tem certeza?';
@@ -187,8 +187,10 @@ function carregaListaDespesas(despesasFiltradas) {
             //dialog de erro
             $('#modalRegistraDespesa').modal('show');
 
-            bd.removerDespesa(this.id.replace('id_dispesa_', ''));
-            window.location.reload();
+            document.querySelector('#btnConfirma').addEventListener('click', () => {
+                excluirDespesa(this.id.replace('id_dispesa_', ''));
+            });
+            
         };
         linha.insertCell(4).append(btnExclusao);
     })
@@ -227,4 +229,9 @@ function customizarModal(customModal) {
         document.getElementById('btnConfirma').style.display = (customModal.confirma === true ? 'block' : 'none');
         document.getElementById('modal_btn').innerHTML = customModal.descBotao;
         document.getElementById('modal_btn').className = customModal.customBotao;
+}
+
+function excluirDespesa(id_dispesa) {
+    bd.removerDespesa(id_dispesa);
+    window.location.reload();
 }
